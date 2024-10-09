@@ -3,43 +3,51 @@ import random
 import time
 
 # 초기 설정
+import streamlit as st
+import random
+
+# 초기 설정
 if 'AVal' not in st.session_state:
     st.session_state.AVal = [[str(random.randint(1, 9)) for _ in range(9)] for _ in range(9)]
 
 def num_click(i, j):
-    st.session_state.AVal[i][j] = str((int(st.session_state.AVal[i][j]) % 9) + 1)  # 예시 클릭 동작
+    # 숫자를 1 증가시키는 클릭 동작
+    current_val = int(st.session_state.AVal[i][j])
+    st.session_state.AVal[i][j] = str((current_val % 9) + 1)
 
 # 각 컨테이너 만들기
 c1 = st.container()
 c2 = st.container()
 c3 = st.container()
 
-# 각 컨테이너에 3개의 열 만들기
+# 첫 번째 컨테이너에 3개의 열 만들기
 with c1:
     col1, col2, col3 = st.columns(3)
     for i in range(3):
-        with col1:
-            for j in range(3):
-                button_key = f"btn_{i}_{j}_{st.session_state.AVal[i][j]}"
-                if st.button(st.session_state.AVal[i][j], on_click=lambda i=i, j=j: num_click(i, j), key=button_key):
+        for j in range(3):
+            with col1 if j == 0 else col2 if j == 1 else col3:
+                button_key = f"btn_{i}_{j}"  # 키를 고유하게 만듭니다
+                if st.button(st.session_state.AVal[i][j], on_click=num_click, args=(i, j), key=button_key):
                     st.write(f"Button {i},{j} clicked.")
 
+# 두 번째 컨테이너에 3개의 열 만들기
 with c2:
     col4, col5, col6 = st.columns(3)
     for i in range(3, 6):
-        with col4:
-            for j in range(3):
-                button_key = f"btn_{i}_{j}_{st.session_state.AVal[i][j]}"
-                if st.button(st.session_state.AVal[i][j], on_click=lambda i=i, j=j: num_click(i, j), key=button_key):
+        for j in range(3):
+            with col4 if j == 0 else col5 if j == 1 else col6:
+                button_key = f"btn_{i}_{j}"  # 키를 고유하게 만듭니다
+                if st.button(st.session_state.AVal[i][j], on_click=num_click, args=(i, j), key=button_key):
                     st.write(f"Button {i},{j} clicked.")
 
+# 세 번째 컨테이너에 3개의 열 만들기
 with c3:
     col7, col8, col9 = st.columns(3)
     for i in range(6, 9):
-        with col7:
-            for j in range(3):
-                button_key = f"btn_{i}_{j}_{st.session_state.AVal[i][j]}"
-                if st.button(st.session_state.AVal[i][j], on_click=lambda i=i, j=j: num_click(i, j), key=button_key):
+        for j in range(3):
+            with col7 if j == 0 else col8 if j == 1 else col9:
+                button_key = f"btn_{i}_{j}"  # 키를 고유하게 만듭니다
+                if st.button(st.session_state.AVal[i][j], on_click=num_click, args=(i, j), key=button_key):
                     st.write(f"Button {i},{j} clicked.")
 
 if 'ButtonList' not in st.session_state:
