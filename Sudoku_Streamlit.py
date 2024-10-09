@@ -68,8 +68,11 @@ for i in range(9):
     cols = st.columns(9)
     for j, col in enumerate(cols):
         with col:
+            # 버튼을 그리드에서 출력 (고유한 키를 명확히 하기 위해 i, j를 문자열로 사용)
+            button_key = f"btn_{i}_{j}_{st.session_state.AVal[i][j]}"
             if st.session_state.AVal[i][j]:
-                st.button(st.session_state.AVal[i][j], on_click=lambda i=i, j=j: num_click(i, j), key=f"btn_{i}_{j}")
+                if st.button(st.session_state.AVal[i][j], on_click=lambda i=i, j=j: num_click(i, j), key=button_key):
+                    st.write(f"Button {i},{j} clicked.")
 
 # 숫자 입력 처리
 st.write("Press a number key (1-9):")
