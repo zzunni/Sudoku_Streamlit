@@ -3,19 +3,16 @@ import random
 import time
 
 # 초기 설정
-c1, c2, c3 = st.container()
-col1, col2, col3 = st.c1.columns(3)
-col4, col5, col6 = st.c2.columns(3)
-col7, col8, col9 = st.c3.columns(3)
-
 if 'AVal' not in st.session_state:
     st.session_state.AVal = [[str(random.randint(1, 9)) for _ in range(9)] for _ in range(9)]
 
 def num_click(i, j):
     st.session_state.AVal[i][j] = str((int(st.session_state.AVal[i][j]) % 9) + 1)  # 예시 클릭 동작
 
-# UI 레이아웃
-c1, c2, c3 = st.container(), st.container(), st.container()
+# 각 컨테이너 만들기
+c1 = st.container()
+c2 = st.container()
+c3 = st.container()
 
 # 각 컨테이너에 3개의 열 만들기
 with c1:
